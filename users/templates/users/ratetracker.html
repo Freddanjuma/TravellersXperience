@@ -1,0 +1,117 @@
+{% extends 'users/HTMLs/base.html' %}
+{% load static %}
+
+{% block content %}
+<section class="ratetracker-page container">
+  <h2>💱 Live Exchange Rates</h2>
+  <p>Convert amounts and view quick rates for popular destination currencies.</p>
+
+  <div class="converter-card">
+    <form id="convertForm" class="convert-form">
+      <div class="row">
+        <div>
+          <label>From</label>
+          <select id="from" required>
+            <option value="USD">USD</option>
+            <option value="EUR">EUR</option>
+            <option value="GBP">GBP</option>
+            <option value="GHS">GHS</option>
+            <option value="NGN">NGN</option>
+          </select>
+        </div>
+
+        <div>
+          <label>To</label>
+          <select id="to" required>
+            <option value="GHS">GHS</option>
+            <option value="NGN">NGN</option>
+            <option value="USD">USD</option>
+            <option value="EUR">EUR</option>
+            <option value="GBP">GBP</option>
+          </select>
+        </div>
+
+        <div>
+          <label>Amount</label>
+          <input id="amount" type="number" value="1" min="0.01" step="0.01" required>
+        </div>
+
+        <div class="form-actions">
+          <button type="submit" class="btn-primary">Convert</button>
+        </div>
+      </div>
+    </form>
+
+    <div id="conversionResult" class="conversion-result">
+      <p>Select currencies and click Convert to see results.</p>
+    </div>
+  </div>
+
+  <hr>
+
+  <h3>Quick Rates (against USD)</h3>
+  <div id="quickRates" class="quick-rates-grid">
+    <p>Loading rates…</p>
+  </div>
+</section>
+
+{% endblock %}
+
+{% block scripts %}
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const convertForm = document.getElementById('convertForm');
+  const conversionResult = document.getElementById('conversionResult');
+  const quickRates = document.getElementById('quickRates');
+
+  // Convert using exchangerate.host API
+  convertForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const from = document.getElementById('from').value;
+    const to = document.getElementById('to').value;
+    const amount = document.getElementById('amount').value || 1;
+
+    const url = `https://api.exchangerate.host/convert?from=${from}&to=${to}&amount=${amount}`;
+    conversionResult.innerHTML = '<p>Loading conversion...</p>';
+
+    try {
+      const res = await fetch(url);
+      const data = await res.json();
+      if (data && data.result !== undefined) {
+        conversionResult.innerHTML = `<h4>${amount} ${from} = ${data.result.toFixed(2)} ${to}</h4>
+          <p>Rate: 1 ${from} = ${data.info.rate.toFixed(6)} ${to}</p>`;
+      } else {
+        conversionResult.innerHTML = '<p>Unable to fetch conversion. Try again later.</p>';
+      }
+    } catch (err) {
+      console.error(err);
+      conversionResult.innerHTML = '<p>Error fetching conversion. Check your network.</p>';
+    }
+  });
+
+  // Load quick rates for popular currencies against USD
+  (async function loadQuickRates() {
+    const base = 'USD';
+    const symbols = ['GHS','NGN','EUR','GBP','AED']; // add or change as needed
+    const url = `https://api.exchangerate.host/latest?base=${base}&symbols=${symbols.join(',')}`;
+
+    quickRates.innerHTML = '<p>Loading quick rates...</p>';
+    try {
+      const res = await fetch(url);
+      const data = await res.json();
+      const rates = data.rates || {};
+      quickRates.innerHTML = '';
+      for (const [currency, rate] of Object.entries(rates)) {
+        const card = document.createElement('div');
+        card.className = 'rate-card';
+        card.innerHTML = `<h4>${currency}</h4><p>1 ${base} = ${rate.toFixed(4)} ${currency}</p>`;
+        quickRates.appendChild(card);
+      }
+    } catch (err) {
+      quickRates.innerHTML = '<p>Unable to load quick rates.</p>';
+      console.error(err);
+    }
+  })();
+});
+</script>
+{% endblock %}

@@ -1,0 +1,111 @@
+{% extends 'users/HTMLs/base.html' %}
+{% load static %}
+
+{% block content %}
+<section class="destinations-page container">
+  <h2 class="page-title">✈️ Explore Our Travel Packages</h2>
+  <p class="lead">Hand-picked packages with flexible dates and transparent pricing.</p>
+
+  <div class="packages-grid">
+    <!-- Paris -->
+    <article class="package-card">
+      <img src="{% static 'images/paris.jpg' %}" alt="Paris" class="pkg-img">
+      <div class="pkg-body">
+        <h3>Paris, France</h3>
+        <p>5 days • Romance & culture • Guided city tour & Seine cruise</p>
+        <div class="pkg-meta">
+          <span class="price">$1,200</span>
+          <button class="btn-primary book-btn" data-package="Paris">Book Now</button>
+        </div>
+      </div>
+    </article>
+
+    <!-- Dubai -->
+    <article class="package-card">
+      <img src="{% static 'images/dubai.jpg' %}" alt="Dubai" class="pkg-img">
+      <div class="pkg-body">
+        <h3>Dubai, UAE</h3>
+        <p>4 days • Luxury experiences • Desert safari & city highlights</p>
+        <div class="pkg-meta">
+          <span class="price">$1,500</span>
+          <button class="btn-primary book-btn" data-package="Dubai">Book Now</button>
+        </div>
+      </div>
+    </article>
+
+    <!-- Cape Town -->
+    <article class="package-card">
+      <img src="{% static 'images/capetown.jpg' %}" alt="Cape Town" class="pkg-img">
+      <div class="pkg-body">
+        <h3>Cape Town, South Africa</h3>
+        <p>6 days • Nature & adventure • Table Mountain & Cape Peninsula tour</p>
+        <div class="pkg-meta">
+          <span class="price">$950</span>
+          <button class="btn-primary book-btn" data-package="Cape Town">Book Now</button>
+        </div>
+      </div>
+    </article>
+
+    <!-- Nigeria (Lagos) -->
+    <article class="package-card">
+      <img src="{% static 'images/lagos.jpg' %}" alt="Lagos, Nigeria" class="pkg-img">
+      <div class="pkg-body">
+        <h3>Lagos, Nigeria</h3>
+        <p>4 days • City life & culture • Markets, beaches & nightlife</p>
+        <div class="pkg-meta">
+          <span class="price">$700</span>
+          <button class="btn-primary book-btn" data-package="Lagos">Book Now</button>
+        </div>
+      </div>
+    </article>
+
+    <!-- Maldives -->
+    <article class="package-card">
+      <img src="{% static 'images/maldives.jpg' %}" alt="Maldives" class="pkg-img">
+      <div class="pkg-body">
+        <h3>Maldives</h3>
+        <p>5 days • Island resort • Snorkeling, water villas & sunset cruises</p>
+        <div class="pkg-meta">
+          <span class="price">$2,100</span>
+          <button class="btn-primary book-btn" data-package="Maldives">Book Now</button>
+        </div>
+      </div>
+    </article>
+
+    <!-- Cape Coast, Ghana -->
+    <article class="package-card">
+      <img src="{% static 'images/capecoast.jpg' %}" alt="Cape Coast, Ghana" class="pkg-img">
+      <div class="pkg-body">
+        <h3>Cape Coast, Ghana</h3>
+        <p>3 days • History & beaches • Castle tours, local culture & fishing villages</p>
+        <div class="pkg-meta">
+          <span class="price">$350</span>
+          <button class="btn-primary book-btn" data-package="Cape Coast">Book Now</button>
+        </div>
+      </div>
+    </article>
+  </div> <!-- .packages-grid -->
+
+  <!-- Optional: Pagination or "load more" -->
+  <div class="packages-footer">
+    <button id="loadMore" class="btn-secondary">Load more packages</button>
+  </div>
+</section>
+
+<script>
+  // simple client-side handler for the demo "Book Now" buttons
+  document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('.book-btn').forEach(btn =>
+      btn.addEventListener('click', (e) => {
+        const pkg = e.currentTarget.dataset.package;
+        alert(`You clicked Book Now for: ${pkg}\n(Booking flow will be implemented via API later)`);
+      })
+    );
+
+    const loadMore = document.getElementById('loadMore');
+    if (loadMore) {
+      loadMore.addEventListener('click', () => alert('Load more packages — implement pagination or API call here.'));
+    }
+  });
+</script>
+{% endblock %}

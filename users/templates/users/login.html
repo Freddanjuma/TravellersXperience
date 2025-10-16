@@ -1,0 +1,12 @@
+{% extends 'users/base.html' %}
+{% block content %}
+<section class="form-section">
+  <h2>Login to Your Account</h2>
+  <form method="POST" action="{% url 'login' %}">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn-primary">Login</button>
+  </form>
+  <p>Don't have an account? <a href="{% url 'register' %}">Register</a>.</p>
+</section>
+{% endblock %}

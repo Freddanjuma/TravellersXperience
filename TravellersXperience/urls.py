@@ -16,8 +16,24 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from django.shortcuts import render
+
+def home_view(request):
+    return render(request, 'users/HTMLs/home.html')
+
+def destinations_view(request):
+    return render(request, 'users/HTMLs/destinations.html')
+
+def ratetracker_view(request):
+    return render(request, 'users/HTMLs/ratetracker.html')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-     path('api/users/', include('users.urls')), 
+    path('api/users/', include('users.urls')), 
+
+    path('', home_view, name='home'),
+    path('destinations/', destinations_view, name='destinations'),
+    path('ratetracker/', ratetracker_view, name='ratetracker'),
+
+    # include your users.urls etc.
 ]
