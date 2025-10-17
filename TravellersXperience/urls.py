@@ -17,23 +17,12 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from django.shortcuts import render
-
-def home_view(request):
-    return render(request, 'users/HTMLs/home.html')
-
-def destinations_view(request):
-    return render(request, 'users/HTMLs/destinations.html')
-
-def ratetracker_view(request):
-    return render(request, 'users/HTMLs/ratetracker.html')
+from destinations.views import ratetracker_view
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/users/', include('users.urls')), 
-
-    path('', home_view, name='home'),
-    path('destinations/', destinations_view, name='destinations'),
-    path('ratetracker/', ratetracker_view, name='ratetracker'),
-
-    # include your users.urls etc.
+    path('api/users/', include('users.urls')),   #  users auth endpoints
+    path('destinations/', include('destinations.urls')),  # page + api
+     path('ratetracker/', ratetracker_view, name='ratetracker'),
+    # optionally: path('', include('core.urls')) or home view
 ]

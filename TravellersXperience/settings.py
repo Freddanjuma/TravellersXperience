@@ -66,7 +66,11 @@ ROOT_URLCONF = 'TravellersXperience.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [
+          BASE_DIR / 'templates', # General project-level templates 
+            BASE_DIR / 'TravellersXperience' / 'templates', 
+            BASE_DIR / 'users' / 'templates', 
+            ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

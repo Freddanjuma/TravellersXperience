@@ -1,8 +1,29 @@
-{% extends 'users/base.html' %}
+{% extends 'users/HTMLs/base.html' %} {# IMPORTANT: Extend your app's base.html #}
+{% load static %}
+
+{% block title %}Welcome to TravellersXperience{% endblock %}
+
 {% block content %}
-<section class="hero">
-  <h1>Welcome to TravellersXperience</h1>
-  <p>Discover destinations, book experiences, and share your adventures.</p>
-  <a href="{% url 'register' %}" class="btn-primary">Get Started</a>
-</section>
+<div class="container mt-5">
+    <div class="jumbotron text-center">
+        <h1 class="display-4">Explore the World with TravellersXperience!</h1>
+        <p class="lead">Share your journeys, discover new destinations, and connect with fellow adventurers.</p>
+        <hr class="my-4">
+        <p>Your passport to unforgettable travel stories.</p>
+        {# Example links - update with your actual URL names #}
+        <a class="btn btn-primary btn-lg" href="{% url 'blog:post-list' %}" role="button">View All Blog Posts</a>
+        <a class="btn btn-success btn-lg" href="{% url 'api:register' %}" role="button">Join Our Community!</a>
+        {# You might have a link to 'Destinations' here once implemented #}
+        <a class="btn btn-info btn-lg" href="{% url 'api:destination-list' %}" role="button">Discover Destinations</a>
+    </div>
+
+    {# You might display recent destinations or user activity here #}
+    <div class="row mt-5">
+        <div class="col-md-8 offset-md-2">
+            <h2 class="text-center mb-4">Recent Highlights</h2>
+            <p class="text-center">Content for recent destinations or popular experiences will go here.</p>
+            {# Example: Display a few popular destinations or user-generated content #}
+        </div>
+    </div>
+</div>
 {% endblock %}
