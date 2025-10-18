@@ -18,11 +18,15 @@ from django.contrib import admin
 from django.urls import path, include
 from django.shortcuts import render
 from destinations.views import ratetracker_view
+from core import views as core_views
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+     path('', core_views.home, name='home'), # this handle the Homepage
     path('api/users/', include('users.urls')),   #  users auth endpoints
     path('destinations/', include('destinations.urls')),  # page + api
      path('ratetracker/', ratetracker_view, name='ratetracker'),
     # optionally: path('', include('core.urls')) or home view
+    # path('', include('core.urls')), 
 ]
