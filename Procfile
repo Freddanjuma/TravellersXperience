@@ -1,1 +1,1 @@
-web: gunicorn TravellersXperience.wsgi
+web: gunicorn TravellersXperience.wsgi:application
